@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Фитнес — Калории</title>
+
+<style>
+body {
+    font-family: Arial;
+    background:#111;
+    color:white;
+    text-align:center;
+    margin: 0;
+}
+
+/* МЕНЮ */
+.navbar {
+    background: #222;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    border-bottom: 2px solid #00ff88;
+}
+
+.navbar a {
+    color: #00ff88;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    color: white;
+}
+
+.navbar .active {
+    color: white;
+    border-bottom: 2px solid #00ff88;
+}
+
+/* остальное */
+header { background:#222; padding:20px; }
+h1 { color:#00ff88; }
+
+.card {
+    margin-top:30px;
+    padding:20px;
+    background:#222;
+    display:inline-block;
+    border-radius:10px;
+}
+
+button {
+    padding:10px;
+    background:#00ff88;
+    border:none;
+}
+
+input, select {
+    padding:10px;
+    margin:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- МЕНЮ -->
+<nav class="navbar">
+    <a href="index.html">Главная</a>
+    <a href="fitnes.html" class="active">Калории и тренировки</a>
+</nav>
+
+<header>
+<h1>Калории и тренировки</h1>
+</header>
+
+<h2>🔥 Калькулятор калорий</h2>
+
+<div class="card">
+<input id="age" placeholder="Возраст">
+<input id="weight" placeholder="Вес">
+<input id="height" placeholder="Рост">
+
+<select id="activity">
+<option value="1.2">Минимальная активность</option>
+<option value="1.375">Легкая</option>
+<option value="1.55">Средняя</option>
+<option value="1.725">Высокая</option>
+</select>
+
+<button onclick="calc()">Рассчитать</button>
+<p id="res"></p>
+</div>
+ <h3> Рекомендуем к просмотру разминку для всего тела</h3>
+                 <video controls><source src="./собик.mp4">
+                 </video>
+
+<h2>💪 Рекомендации</h2>
+<p>Похудение: кардио + дефицит калорий</p>
+<p>Набор массы: силовые + профицит калорий</p>
+<p>Поддержание: баланс нагрузки и питания</p>
+
+<script>
+function calc() {
+let ageVal = document.getElementById("age").value;
+let w = document.getElementById("weight").value;
+let h = document.getElementById("height").value;
+let act = document.getElementById("activity").value;
+
+if (!ageVal || !w || !h) {
+    res.innerHTML = "Введите данные!";
+    return;
+}
+
+let bmr = 10*w + 6.25*h - 5*ageVal + 5;
+let cal = bmr * act;
+
+res.innerHTML = "Калории: " + Math.round(cal);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Фитнес</title>
+
+<style>
+
+body {
+font-family: Arial, sans-serif;
+background: #222;
+color: white;
+text-align: center;
+margin: 0;
+padding: 0;
+font-size: 20px;
+}
+
+.navbar {
+background: #222;
+padding: 1px 5px;
+flex-wrap: wrap;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 15px;
+border-bottom: 2px solid #00ffcc;
+}
+
+.navbar a {
+color: #00ff88;
+text-decoration: none;
+font-weight: bold;
+font-size: clamp(16px, 4vw, 18px);
+padding: 8px 10px;
+transition: 0.3s;
+white-space: nowrap;
+}
+
+.navbar a:hover {
+color: white;
+background: rgba(0,255,136,0.1);
+border-radius: 8px;
+}
+
+.navbar .active {
+color: white;
+border-bottom: 2px solid #00ff88;
+pointer-events: none;
+}
+
+header {
+background: #222;
+padding: 20px 10px;
+margin-bottom: 10px;
+}
+
+h1 {
+color: #00ff88;
+font-size: clamp(24px, 6vw, 36px);
+margin: 10px 0;
+}
+
+h2 {
+margin-top: 30px;
+color: #00ffcc;
+font-size: clamp(20px, 5vw, 28px);
+}
+
+p {
+font-size: clamp(16px, 3.5vw, 18px);
+padding: 0 15px;
+line-height: 1.5;
+}
+
+/* Таблица адаптивная */
+.table-container {
+width: 100%;
+overflow-x: auto;
+padding: 0 10px;
+margin: 20px 0;
+}
+
+table {
+margin: 0 auto;
+border-collapse: collapse;
+width: 100%;
+max-width: 500px;
+min-width: 280px;
+background: #1a1a1a;
+border-radius: 8px;
+overflow: hidden;
+}
+
+th, td {
+border: 1px solid #00ff88;
+padding: 10px 5px;
+text-align: center;
+font-size: clamp(14px, 3vw, 18px);
+}
+
+th {
+background: #00ff88;
+color: black;
+font-weight: bold;
+}
+
+/* Карточка калькулятора */
+.card {
+margin: 20px auto;
+padding: 20px 15px;
+background: #222;
+display: flex;
+flex-direction: column;
+align-items: center;
+border-radius: 15px;
+width: 90%;
+max-width: 400px;
+box-shadow: 0 4px 15px rgba(0,255,136,0.2);
+}
+
+.input-group {
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 12px;
+margin-bottom: 15px;
+}
+
+input {
+padding: 12px 15px;
+margin: 0;
+border-radius: 10px;
+border: 1px solid #00ff88;
+background: #333;
+color: white;
+font-size: 16px;
+width: 100%;
+outline: none;
+transition: 0.2s;
+}
+
+input:focus {
+border-color: #00fff2;
+box-shadow: 0 0 8px rgba(0,255,136,0.5);
+}
+
+input::placeholder {
+color: #aaa;
+}
+
+button {
+padding: 14px 20px;
+background: #00ff88;
+border: none;
+cursor: pointer;
+font-weight: bold;
+font-size: 18px;
+border-radius: 25px;
+width: 100%;
+color: black;
+transition: 0.2s;
+letter-spacing: 0.5px;
+margin-top: 5px;
+}
+
+button:hover {
+background: #00cc6a;
+transform: scale(1.02);
+}
+
+button:active {
+background: #00994d;
+transform: scale(0.98);
+}
+
+#res {
+margin-top: 18px;
+font-size: 20px;
+font-weight: bold;
+color: #00ff88;
+padding: 10px;
+background: #1a1a1a;
+border-radius: 8px;
+width: 100%;
+word-break: break-word;
+}
+
+/* Медиа-запросы для очень маленьких экранов */
+@media (max-width: 400px) {
+.navbar {
+gap: 5px;
+}
+.navbar a {
+font-size: 14px;
+padding: 6px 8px;
+}
+.card {
+padding: 15px 10px;
+}
+input, button {
+font-size: 15px;
+padding: 12px;
+}
+}
+
+footer {
+margin: 40px 0 20px;
+color: #666;
+font-size: 14px;
+}
+</style>
+
+</head> 
+<html>
+    
+    <nav class="navbar"> 
+    <a href="index.html" class="active">
+    🏠 Главная</a> <a href="fitnes.html">
+        🔥Калории и тренировки</a> </nav><header> 
+            <h1>💪 Фитнес и контроль тела</h1>
+             <p>Путь к форме начинается с понимания своего тела</p>
+              </header>
+              <main> 
+
+                <h2>📘 Введение</h2>
+                 <p> Контроль веса и активности — основа здоровья и хорошей формы. Следите за питанием и регулярно двигайтесь! </p>
+                
+
+                  <h2>⚖️ Таблица веса (рост/норма)</h2>
+                   <div class="table-container">
+                     <table>
+                         <thead>
+                             <tr><th>Рост (см)</th>
+                             <th>Норма (кг)</th>
+                             </tr>
+                              </thead>
+                               <tbody> 
+                                <tr><td>160</td>
+                                    <td>55–60</td>
+                                    </tr> 
+                                    <tr><td>170</td>
+                                        <td>63–70</td>
+                                        </tr>
+                                         <tr>
+                                            <td>180</td>
+                                            <td>70–78</td>
+                                            </tr> 
+                                            </tbody> 
+                                            </table> 
+                                             
+                                            </div>
+                                            <p> Также для раслабления во время тренировок, можем посоветовать Вам включить на фон спокойную мелодию</p>
+<audio controls>
+<source src="./24b0d8ed4ae4cb2.mp3">
+</audio>
+<h2>🏋️ Калькулятор ИМТ</h2>
+
+<div class="card">
+<input id="weight" placeholder="Вес (кг)">
+<input id="height" placeholder="Рост (см)">
+<button onclick="calc()">Рассчитать</button>
+<p id="res"></p>
+</div>
+
+<script>
+function calc() {
+let w = weight.value;
+let h = height.value;
+
+if (!w || !h) {
+    res.innerHTML = "Введите данные!";
+    return;
+}
+
+let bmi = w / ((h/100)*(h/100));
+res.innerHTML = "Норма: " + bmi.toFixed(2);
+}
+</script>
+
+</body>
+</html>
+</body>
+</html>
