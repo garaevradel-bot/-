@@ -1,285 +1,604 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head> 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Фитнес</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фитнес — Главная</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #222;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+        }
 
-<style>
+        /* АДАПТИВНАЯ НАВИГАЦИЯ */
+        .navbar {
+            background: #222;
+            padding: 10px 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 2px solid #00ffcc;
+            position: relative;
+        }
 
-body {
-font-family: Arial, sans-serif;
-background: #222;
-color: white;
-text-align: center;
-margin: 0;
-padding: 0;
-font-size: 20px;
-}
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
 
-.navbar {
-background: #222;
-padding: 1px 5px;
-flex-wrap: wrap;
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 15px;
-border-bottom: 2px solid #00ffcc;
-}
+        .nav-links a {
+            color: #00ff88;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(16px, 4vw, 18px);
+            padding: 8px 10px;
+            transition: 0.3s;
+            white-space: nowrap;
+            border-radius: 8px;
+        }
 
-.navbar a {
-color: #00ff88;
-text-decoration: none;
-font-weight: bold;
-font-size: clamp(16px, 4vw, 18px);
-padding: 8px 10px;
-transition: 0.3s;
-white-space: nowrap;
-}
+        .nav-links a:hover {
+            color: white;
+            background: rgba(0, 255, 136, 0.1);
+        }
 
-.navbar a:hover {
-color: white;
-background: rgba(0,255,136,0.1);
-border-radius: 8px;
-}
+        .nav-links .active {
+            color: white;
+            border-bottom: 2px solid #00ff88;
+            pointer-events: none;
+        }
 
-.navbar .active {
-color: white;
-border-bottom: 2px solid #00ff88;
-pointer-events: none;
-}
+        .auth-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-header {
-background: #222;
-padding: 20px 10px;
-margin-bottom: 10px;
-}
+        .auth-buttons button {
+            padding: 8px 14px;
+            background: #00ff88;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 20px;
+            font-size: 14px;
+            color: black;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
 
-h1 {
-color: #00ff88;
-font-size: clamp(24px, 6vw, 36px);
-margin: 10px 0;
-}
+        .auth-buttons button:hover {
+            background: #00cc6a;
+            transform: scale(1.02);
+        }
 
-h2 {
-margin-top: 30px;
-color: #00ffcc;
-font-size: clamp(20px, 5vw, 28px);
-}
+        /* ПОИСКОВАЯ СТРОКА */
+        .search-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 15px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
 
-p {
-font-size: clamp(16px, 3.5vw, 18px);
-padding: 0 15px;
-line-height: 1.5;
-}
+        .search-container input {
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: 1px solid #00ff88;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            width: 60%;
+            max-width: 400px;
+            outline: none;
+        }
 
-/* Таблица адаптивная */
-.table-container {
-width: 100%;
-overflow-x: auto;
-padding: 0 10px;
-margin: 20px 0;
-}
+        .search-container button {
+            padding: 12px 20px;
+            background: #00ff88;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 25px;
+            color: black;
+            transition: 0.2s;
+        }
 
-table {
-margin: 0 auto;
-border-collapse: collapse;
-width: 100%;
-max-width: 500px;
-min-width: 280px;
-background: #1a1a1a;
-border-radius: 8px;
-overflow: hidden;
-}
+        .search-container button:hover {
+            background: #00cc6a;
+        }
 
-th, td {
-border: 1px solid #00ff88;
-padding: 10px 5px;
-text-align: center;
-font-size: clamp(14px, 3vw, 18px);
-}
+        #searchResult {
+            width: 100%;
+            text-align: center;
+            color: #ffcc00;
+            font-size: 16px;
+            margin: 5px 0;
+            min-height: 20px;
+        }
 
-th {
-background: #00ff88;
-color: black;
-font-weight: bold;
-}
+        /* Подсветка найденного текста */
+        .highlight {
+            background-color: #ffcc00;
+            color: black;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
 
-/* Карточка калькулятора */
-.card {
-margin: 20px auto;
-padding: 20px 15px;
-background: #222;
-display: flex;
-flex-direction: column;
-align-items: center;
-border-radius: 15px;
-width: 90%;
-max-width: 400px;
-box-shadow: 0 4px 15px rgba(0,255,136,0.2);
-}
+        header {
+            background: #222;
+            padding: 20px 10px;
+            margin-bottom: 10px;
+        }
 
-.input-group {
-width: 100%;
-display: flex;
-flex-direction: column;
-gap: 12px;
-margin-bottom: 15px;
-}
+        h1 {
+            color: #00ff88;
+            font-size: clamp(24px, 6vw, 36px);
+            margin: 10px 0;
+        }
 
-input {
-padding: 12px 15px;
-margin: 0;
-border-radius: 10px;
-border: 1px solid #00ff88;
-background: #333;
-color: white;
-font-size: 16px;
-width: 100%;
-outline: none;
-transition: 0.2s;
-}
+        h2 {
+            margin-top: 30px;
+            color: #00ffcc;
+            font-size: clamp(20px, 5vw, 28px);
+        }
 
-input:focus {
-border-color: #00fff2;
-box-shadow: 0 0 8px rgba(0,255,136,0.5);
-}
+        p {
+            font-size: clamp(16px, 3.5vw, 18px);
+            padding: 0 15px;
+            line-height: 1.5;
+        }
 
-input::placeholder {
-color: #aaa;
-}
+        /* ТАБЛИЦА */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 0 10px;
+            margin: 20px 0;
+        }
 
-button {
-padding: 14px 20px;
-background: #00ff88;
-border: none;
-cursor: pointer;
-font-weight: bold;
-font-size: 18px;
-border-radius: 25px;
-width: 100%;
-color: black;
-transition: 0.2s;
-letter-spacing: 0.5px;
-margin-top: 5px;
-}
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 500px;
+            min-width: 280px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
 
-button:hover {
-background: #00cc6a;
-transform: scale(1.02);
-}
+        th, td {
+            border: 1px solid #00ff88;
+            padding: 10px 5px;
+            text-align: center;
+            font-size: clamp(14px, 3vw, 18px);
+        }
 
-button:active {
-background: #00994d;
-transform: scale(0.98);
-}
+        th {
+            background: #00ff88;
+            color: black;
+            font-weight: bold;
+        }
 
-#res {
-margin-top: 18px;
-font-size: 20px;
-font-weight: bold;
-color: #00ff88;
-padding: 10px;
-background: #1a1a1a;
-border-radius: 8px;
-width: 100%;
-word-break: break-word;
-}
+        /* КАРТОЧКА */
+        .card {
+            margin: 20px auto;
+            padding: 20px 15px;
+            background: #222;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+        }
 
-/* Медиа-запросы для очень маленьких экранов */
-@media (max-width: 400px) {
-.navbar {
-gap: 5px;
-}
-.navbar a {
-font-size: 14px;
-padding: 6px 8px;
-}
-.card {
-padding: 15px 10px;
-}
-input, button {
-font-size: 15px;
-padding: 12px;
-}
-}
+        input, textarea {
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid #00ff88;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            box-sizing: border-box;
+            transition: 0.2s;
+        }
 
-footer {
-margin: 40px 0 20px;
-color: #666;
-font-size: 14px;
-}
-</style>
+        input:focus, textarea:focus {
+            border-color: #00fff2;
+            box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
 
-</head> 
-<html>
+        button {
+            padding: 14px 20px;
+            background: #00ff88;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 25px;
+            width: 100%;
+            color: black;
+            transition: 0.2s;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #00cc6a;
+            transform: scale(1.02);
+        }
+
+        #res {
+            margin-top: 18px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff88;
+            padding: 10px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            width: 100%;
+            word-break: break-word;
+        }
+
+        /* НУМЕРОВАННЫЙ СПИСОК */
+        ol {
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 30px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        ol li {
+            margin-bottom: 12px;
+            padding-left: 10px;
+        }
+
+        /* МОДАЛЬНЫЕ ОКНА */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #222;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 350px;
+            box-shadow: 0 0 20px #00ff88;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #00ff88;
+            font-size: 28px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        footer {
+            margin: 40px 0 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+            }
+            .nav-links, .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- АДАПТИВНАЯ НАВИГАЦИЯ С АВТОРИЗАЦИЕЙ -->
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html" class="active">🏠 Главная</a>
+        <a href="fitnes.html">🔥 Калории и тренировки</a>
+    </div>
+    <div class="auth-buttons">
+        <button onclick="openModal('loginModal')">Войти</button>
+        <button onclick="openModal('registerModal')">Регистрация</button>
+        <span id="userDisplay" style="color:#00ff88; margin-left:10px;"></span>
+    </div>
+</nav>
+
+<!-- ПОИСКОВАЯ СТРОКА -->
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Поиск по сайту...">
+    <button onclick="searchSite()">🔍 Найти</button>
+    <button onclick="clearSearch()" style="background:#555; color:white;">✖ Сбросить</button>
+</div>
+<p id="searchResult"></p>
+
+<header>
+    <h1>💪 Фитнес и контроль тела</h1>
+    <p>Путь к форме начинается с понимания своего тела</p>
+</header>
+
+<main id="searchableContent">
+    <h2>📘 Введение</h2>
+    <p>Контроль веса и активности — основа здоровья и хорошей формы. Следите за питанием и регулярно двигайтесь!</p>
+
+    <!-- НУМЕРОВАННЫЙ СПИСОК -->
+    <h2>🔢 5 шагов к здоровому образу жизни</h2>
+    <ol>
+        <li><strong>Определите цель:</strong> похудение, набор массы или поддержание формы.</li>
+        <li><strong>Рассчитайте свою норму калорий</strong> с помощью нашего калькулятора.</li>
+        <li><strong>Составьте план питания</strong> с балансом белков, жиров и углеводов.</li>
+        <li><strong>Добавьте регулярные тренировки</strong> — минимум 3 раза в неделю.</li>
+        <li><strong>Отслеживайте прогресс</strong> и корректируйте нагрузку каждые 2 недели.</li>
+    </ol>
+
+    <h2>⚖️ Таблица веса (рост/норма)</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr><th>Рост (см)</th><th>Норма (кг)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>160</td><td>55–60</td></tr>
+                <tr><td>170</td><td>63–70</td></tr>
+                <tr><td>180</td><td>70–78</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p>Также для расслабления во время тренировок можем посоветовать включить на фон спокойную мелодию</p>
+    <audio controls>
+        <source src="./24b0d8ed4ae4cb2.mp3" type="audio/mpeg">
+    </audio>
+
+    <h2>🏋️ Калькулятор ИМТ</h2>
+    <div class="card">
+        <input id="weight" placeholder="Вес (кг)">
+        <input id="height" placeholder="Рост (см)">
+        <button onclick="calcBMI()">Рассчитать</button>
+        <p id="res"></p>
+    </div>
     
-    <nav class="navbar"> 
-    <a href="index.html" class="active">
-    🏠 Главная</a> <a href="fitnes.html">
-        🔥Калории и тренировки</a> </nav><header> 
-            <h1>💪 Фитнес и контроль тела</h1>
-             <p>Путь к форме начинается с понимания своего тела</p>
-              </header>
-              <main> 
+    <!-- ОБРАТНАЯ СВЯЗЬ -->
+    <h2>📩 Обратная связь</h2>
+    <div class="card">
+        <input type="text" id="feedbackName" placeholder="Ваше имя">
+        <input type="email" id="feedbackEmail" placeholder="Email">
+        <textarea id="feedbackMessage" placeholder="Ваше сообщение..." rows="4"></textarea>
+        <button onclick="sendFeedback()">Отправить</button>
+        <p id="feedbackStatus" style="font-size:14px; color:#00ffcc;"></p>
+    </div>
+</main>
 
-                <h2>📘 Введение</h2>
-                 <p> Контроль веса и активности — основа здоровья и хорошей формы. Следите за питанием и регулярно двигайтесь! </p>
-                
-
-                  <h2>⚖️ Таблица веса (рост/норма)</h2>
-                   <div class="table-container">
-                     <table>
-                         <thead>
-                             <tr><th>Рост (см)</th>
-                             <th>Норма (кг)</th>
-                             </tr>
-                              </thead>
-                               <tbody> 
-                                <tr><td>160</td>
-                                    <td>55–60</td>
-                                    </tr> 
-                                    <tr><td>170</td>
-                                        <td>63–70</td>
-                                        </tr>
-                                         <tr>
-                                            <td>180</td>
-                                            <td>70–78</td>
-                                            </tr> 
-                                            </tbody> 
-                                            </table> 
-                                             
-                                            </div>
-                                            <p> Также для раслабления во время тренировок, можем посоветовать Вам включить на фон спокойную мелодию</p>
-<audio controls>
-<source src="./24b0d8ed4ae4cb2.mp3">
-</audio>
-<h2>🏋️ Калькулятор ИМТ</h2>
-
-<div class="card">
-<input id="weight" placeholder="Вес (кг)">
-<input id="height" placeholder="Рост (см)">
-<button onclick="calc()">Рассчитать</button>
-<p id="res"></p>
+<!-- МОДАЛЬНЫЕ ОКНА АВТОРИЗАЦИИ/РЕГИСТРАЦИИ -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('loginModal')">&times;</span>
+        <h2>Вход</h2>
+        <input type="text" id="loginUser" placeholder="Логин">
+        <input type="password" id="loginPass" placeholder="Пароль">
+        <button onclick="login()">Войти</button>
+        <p id="loginMsg" style="font-size:14px;"></p>
+    </div>
 </div>
 
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('registerModal')">&times;</span>
+        <h2>Регистрация</h2>
+        <input type="text" id="regUser" placeholder="Придумайте логин">
+        <input type="password" id="regPass" placeholder="Придумайте пароль">
+        <button onclick="register()">Зарегистрироваться</button>
+        <p id="regMsg" style="font-size:14px;"></p>
+    </div>
+</div>
+
+<footer>© 2025 Фитнес-портал</footer>
+
 <script>
-function calc() {
-let w = weight.value;
-let h = height.value;
+    // ИМТ калькулятор
+    function calcBMI() {
+        let w = document.getElementById("weight").value;
+        let h = document.getElementById("height").value;
+        let res = document.getElementById("res");
+        if (!w || !h) {
+            res.innerHTML = "Введите данные!";
+            return;
+        }
+        let bmi = w / ((h/100)*(h/100));
+        res.innerHTML = "ИМТ: " + bmi.toFixed(2);
+    }
 
-if (!w || !h) {
-    res.innerHTML = "Введите данные!";
-    return;
-}
+    // ПОИСК ПО САЙТУ (работает!)
+    function searchSite() {
+        let query = document.getElementById("searchInput").value.trim().toLowerCase();
+        let resultDiv = document.getElementById("searchResult");
+        let content = document.getElementById("searchableContent");
+        
+        // Сначала убираем все предыдущие подсветки
+        clearHighlights();
+        
+        if (!query) {
+            resultDiv.innerHTML = "Введите поисковый запрос!";
+            return;
+        }
+        
+        // Получаем весь текст из контента
+        let textElements = content.querySelectorAll("h1, h2, h3, p, li, td, th, strong");
+        let foundCount = 0;
+        
+        textElements.forEach(function(element) {
+            let originalText = element.textContent || element.innerText;
+            let lowerText = originalText.toLowerCase();
+            
+            if (lowerText.includes(query)) {
+                foundCount++;
+                // Подсвечиваем найденный текст
+                let regex = new RegExp("(" + query + ")", "gi");
+                element.innerHTML = element.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+            }
+        });
+        
+        if (foundCount > 0) {
+            resultDiv.innerHTML = "✅ Найдено совпадений: " + foundCount;
+            // Прокручиваем к первому найденному элементу
+            let firstHighlight = document.querySelector(".highlight");
+            if (firstHighlight) {
+                firstHighlight.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        } else {
+            resultDiv.innerHTML = "❌ Ничего не найдено по запросу: \"" + query + "\"";
+        }
+    }
+    
+    // Очистка подсветки
+    function clearHighlights() {
+        let highlights = document.querySelectorAll(".highlight");
+        highlights.forEach(function(span) {
+            let parent = span.parentNode;
+            parent.replaceChild(document.createTextNode(span.textContent), span);
+            parent.normalize(); // Объединяем текстовые узлы
+        });
+    }
+    
+    // Сброс поиска
+    function clearSearch() {
+        document.getElementById("searchInput").value = "";
+        document.getElementById("searchResult").innerHTML = "";
+        clearHighlights();
+    }
 
-let bmi = w / ((h/100)*(h/100));
-res.innerHTML = "Норма: " + bmi.toFixed(2);
-}
+    // Загрузка файла (демо)
+    function uploadFile() {
+        let fileInput = document.getElementById("fileUpload");
+        let status = document.getElementById("fileStatus");
+        if (fileInput.files.length > 0) {
+            status.innerHTML = "Файл \"" + fileInput.files[0].name + "\" выбран. (Загрузка на сервер не реализована в демо)";
+        } else {
+            status.innerHTML = "Пожалуйста, выберите файл.";
+        }
+    }
+
+    // Обратная связь
+    function sendFeedback() {
+        let name = document.getElementById("feedbackName").value;
+        let email = document.getElementById("feedbackEmail").value;
+        let msg = document.getElementById("feedbackMessage").value;
+        let status = document.getElementById("feedbackStatus");
+        if (name && email && msg) {
+            status.innerHTML = "Спасибо, " + name + "! Ваше сообщение отправлено.";
+            document.getElementById("feedbackName").value = "";
+            document.getElementById("feedbackEmail").value = "";
+            document.getElementById("feedbackMessage").value = "";
+        } else {
+            status.innerHTML = "Заполните все поля!";
+        }
+    }
+
+    // Модальные окна
+    function openModal(id) {
+        document.getElementById(id).style.display = "flex";
+    }
+    function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+    }
+
+    // Регистрация (LocalStorage)
+    function register() {
+        let user = document.getElementById("regUser").value.trim();
+        let pass = document.getElementById("regPass").value.trim();
+        let msg = document.getElementById("regMsg");
+        if (!user || !pass) {
+            msg.innerHTML = "Заполните все поля!";
+            return;
+        }
+        if (localStorage.getItem("user_" + user)) {
+            msg.innerHTML = "Пользователь уже существует!";
+        } else {
+            localStorage.setItem("user_" + user, pass);
+            msg.innerHTML = "Регистрация успешна!";
+            setTimeout(() => closeModal('registerModal'), 1000);
+        }
+    }
+
+    // Авторизация
+    function login() {
+        let user = document.getElementById("loginUser").value.trim();
+        let pass = document.getElementById("loginPass").value.trim();
+        let msg = document.getElementById("loginMsg");
+        if (!user || !pass) {
+            msg.innerHTML = "Заполните все поля!";
+            return;
+        }
+        let storedPass = localStorage.getItem("user_" + user);
+        if (storedPass === pass) {
+            sessionStorage.setItem("currentUser", user);
+            document.getElementById("userDisplay").innerHTML = "👤 " + user;
+            msg.innerHTML = "Вход выполнен!";
+            setTimeout(() => closeModal('loginModal'), 1000);
+        } else {
+            msg.innerHTML = "Неверный логин или пароль!";
+        }
+    }
+
+    // При загрузке страницы проверяем сессию
+    window.onload = function() {
+        let currentUser = sessionStorage.getItem("currentUser");
+        if (currentUser) {
+            document.getElementById("userDisplay").innerHTML = "👤 " + currentUser;
+        }
+        // Закрытие модальных окон при клике вне их
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+        
+        // Поиск по нажатию Enter
+        document.getElementById("searchInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                searchSite();
+            }
+        });
+    }
 </script>
 
-</body>
-</html>
 </body>
 </html>
